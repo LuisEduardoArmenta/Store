@@ -1,0 +1,153 @@
+/* Animaciones para el modal */
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes overlayFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Aplicar animaciones */
+.fixed.inset-0 {
+  animation: overlayFadeIn 0.3s ease-out;
+}
+
+.relative.w-full {
+  animation: modalSlideIn 0.3s ease-out;
+}
+
+/* Estilos personalizados para inputs */
+input:focus {
+  box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1);
+}
+
+/* Mejoras visuales para campos inválidos */
+.border-red-500 {
+  border-color: #ef4444 !important;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1) !important;
+}
+
+/* Estilo para el botón de cerrar */
+button:hover svg {
+  transform: rotate(90deg);
+  transition: transform 0.2s ease;
+}
+
+/* Animación del spinner */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+/* Efectos de transición suaves */
+* {
+  transition: all 0.2s ease;
+}
+
+/* Estilo para mensajes de error */
+.text-red-600 {
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+/* Estilo para el overlay del modal */
+.backdrop-blur-sm {
+  backdrop-filter: blur(4px);
+}
+
+/* Estilo personalizado para checkbox */
+input[type="checkbox"]:checked {
+  background-color: #ea580c;
+  border-color: #ea580c;
+}
+
+input[type="checkbox"]:focus {
+  box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1);
+}
+
+/* Grid responsivo para nombre y apellido */
+@media (max-width: 640px) {
+  .grid-cols-1 {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+}
+
+/* Scroll personalizado para modal largo */
+.overflow-y-auto::-webkit-scrollbar {
+  width: 6px;
+}
+
+.overflow-y-auto::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 3px;
+}
+
+.overflow-y-auto::-webkit-scrollbar-thumb {
+  background: #d97706;
+  border-radius: 3px;
+}
+
+.overflow-y-auto::-webkit-scrollbar-thumb:hover {
+  background: #b45309;
+}
+
+/* Responsividad adicional */
+@media (max-width: 640px) {
+  .relative.w-full {
+    margin: 1rem;
+    max-width: calc(100% - 2rem);
+    max-height: calc(100vh - 2rem);
+  }
+  
+  .px-8 {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+/* Mejoras visuales para los inputs con iconos */
+.relative input {
+  padding-left: 2.5rem;
+}
+
+/* Estilo hover para enlaces */
+a:hover {
+  text-decoration: underline;
+}
+
+/* Animación sutil para los campos del formulario */
+input:focus {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(249, 115, 22, 0.15);
+}
+
+/* Estilo para botón deshabilitado */
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+  transform: none !important;
+}
+
+button:disabled:hover {
+  transform: none !important;
+}

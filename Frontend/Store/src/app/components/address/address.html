@@ -1,0 +1,241 @@
+<div class="max-w-6xl mx-auto p-6">
+  <!-- Breadcrumb -->
+  <nav class="flex items-center gap-2 text-sm text-gray-600 mb-4">
+    <a routerLink="/home" class="hover:text-orange-600 transition-colors">Inicio</a>
+    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+    </svg>
+    <span class="text-gray-900 font-medium">Mis Direcciones</span>
+  </nav>
+
+  <!-- Header -->
+  <div class="bg-gradient-to-r from-green-50 to-green-100 rounded-xl p-6 mb-6">
+    <div class="flex items-center justify-between">
+      <div class="flex items-center gap-4">
+        <div class="h-16 w-16 rounded-full bg-gradient-to-r from-green-500 to-green-600 flex items-center justify-center text-white text-2xl">
+          <svg class="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+          </svg>
+        </div>
+        <div>
+          <h1 class="text-2xl font-bold text-gray-900">Mis Direcciones</h1>
+          <p class="text-gray-600">Gestiona tus direcciones de envío</p>
+        </div>
+      </div>
+      <button 
+        (click)="showAddAddressForm()"
+        class="inline-flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+        </svg>
+        Nueva Dirección
+      </button>
+    </div>
+  </div>
+
+  <!-- Mensaje de estado -->
+  <div 
+    *ngIf="message" 
+    class="mb-6 p-4 rounded-lg border"
+    [class.bg-green-50]="messageType === 'success'"
+    [class.text-green-800]="messageType === 'success'"
+    [class.border-green-200]="messageType === 'success'"
+    [class.bg-red-50]="messageType === 'error'"
+    [class.text-red-800]="messageType === 'error'"
+    [class.border-red-200]="messageType === 'error'">
+    {{message}}
+  </div>
+
+  <!-- Formulario de nueva/editar dirección -->
+  <div *ngIf="showAddForm" class="bg-white rounded-xl shadow-lg p-6 mb-6">
+    <div class="flex justify-between items-center mb-6">
+      <h2 class="text-xl font-semibold text-gray-900">
+        {{editingAddress ? 'Editar Dirección' : 'Nueva Dirección'}}
+      </h2>
+      <button 
+        (click)="hideAddAddressForm()"
+        class="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-full transition-colors">
+        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+
+    <form class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Nombre de la dirección *</label>
+        <input 
+          type="text"
+          [(ngModel)]="newAddress.nombre"
+          name="nombre"
+          required
+          class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors"
+          placeholder="Casa, Oficina, etc.">
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Teléfono de contacto</label>
+        <input 
+          type="tel"
+          [(ngModel)]="newAddress.telefono"
+          name="telefono"
+          class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors"
+          placeholder="Teléfono para esta dirección">
+      </div>
+
+      <div class="md:col-span-2">
+        <label class="block text-sm font-medium text-gray-700 mb-1">Dirección completa *</label>
+        <textarea 
+          [(ngModel)]="newAddress.direccionCompleta"
+          name="direccionCompleta"
+          required
+          rows="3"
+          class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors"
+          placeholder="Calle, número, colonia, etc."></textarea>
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Ciudad *</label>
+        <input 
+          type="text"
+          [(ngModel)]="newAddress.ciudad"
+          name="ciudad"
+          required
+          class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors"
+          placeholder="Ciudad">
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Estado *</label>
+        <select 
+          [(ngModel)]="newAddress.estado"
+          name="estado"
+          required
+          class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors">
+          <option value="">Selecciona un estado</option>
+          <option *ngFor="let estado of estadosMexico" [value]="estado">{{estado}}</option>
+        </select>
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Código Postal *</label>
+        <input 
+          type="text"
+          [(ngModel)]="newAddress.codigoPostal"
+          name="codigoPostal"
+          required
+          maxlength="5"
+          class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors"
+          placeholder="12345">
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">País</label>
+        <input 
+          type="text"
+          [(ngModel)]="newAddress.pais"
+          name="pais"
+          readonly
+          class="w-full p-3 border border-gray-300 rounded-lg bg-gray-50 cursor-not-allowed">
+      </div>
+
+      <div class="md:col-span-2">
+        <label class="block text-sm font-medium text-gray-700 mb-1">Referencias</label>
+        <textarea 
+          [(ngModel)]="newAddress.referencias"
+          name="referencias"
+          rows="2"
+          class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors"
+          placeholder="Referencias adicionales para encontrar la dirección"></textarea>
+      </div>
+
+      <div class="md:col-span-2">
+        <label class="flex items-center gap-2">
+          <input 
+            type="checkbox"
+            [(ngModel)]="newAddress.esPrincipal"
+            name="esPrincipal"
+            class="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded">
+          <span class="text-sm font-medium text-gray-700">Establecer como dirección principal</span>
+        </label>
+      </div>
+
+      <div class="md:col-span-2 flex justify-end gap-3">
+        <button 
+          type="button"
+          (click)="hideAddAddressForm()"
+          class="px-6 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors">
+          Cancelar
+        </button>
+        <button 
+          type="button"
+          (click)="saveAddress()"
+          [disabled]="loading"
+          class="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+          <span *ngIf="!loading">{{editingAddress ? 'Actualizar' : 'Guardar'}} Dirección</span>
+          <span *ngIf="loading">Guardando...</span>
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Lista de direcciones -->
+  <div *ngIf="!loading && addresses.length === 0 && !showAddForm" class="text-center py-12">
+    <h3 class="text-lg font-medium text-gray-900 mb-2">No tienes direcciones guardadas</h3>
+    <p class="text-gray-500 mb-6">Agrega tu primera dirección para facilitar tus compras futuras</p>
+    <button 
+      (click)="showAddAddressForm()"
+      class="inline-flex items-center gap-2 px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors">
+      Agregar Primera Dirección
+    </button>
+  </div>
+
+  <!-- Direcciones existentes -->
+  <div *ngIf="addresses.length > 0" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div *ngFor="let address of addresses" class="bg-white rounded-xl shadow-lg p-6" 
+         [class.border-l-4]="address.esPrincipal" 
+         [class.border-green-500]="address.esPrincipal">
+      <div class="flex justify-between items-start">
+        <div class="flex-1">
+          <div class="flex items-center gap-2 mb-2">
+            <h3 class="text-lg font-semibold text-gray-900">{{address.nombre}}</h3>
+            <span *ngIf="address.esPrincipal" class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+              Principal
+            </span>
+          </div>
+          <p class="text-gray-600 mb-2">{{address.direccionCompleta}}</p>
+          <p class="text-gray-600 mb-2">{{address.ciudad}}, {{address.estado}} {{address.codigoPostal}}</p>
+          <p *ngIf="address.telefono" class="text-gray-600 mb-2">Tel: {{address.telefono}}</p>
+          
+          <button *ngIf="!address.esPrincipal"
+            (click)="setPrimaryAddress(address)"
+            class="text-sm text-green-600 hover:text-green-700 font-medium">
+            Establecer como principal
+          </button>
+        </div>
+        <div class="flex flex-col gap-2 ml-4">
+          <button 
+            (click)="editAddress(address)"
+            class="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors">
+            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+            </svg>
+          </button>
+          <button 
+            (click)="deleteAddress(address)"
+            class="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors">
+            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading -->
+  <div *ngIf="loading" class="flex justify-center items-center py-12">
+    <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600"></div>
+  </div>
+</div>
