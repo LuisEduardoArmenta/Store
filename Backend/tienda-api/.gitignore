@@ -1,0 +1,7 @@
+# Dependencias
+node_modules
+
+# Variables de entorno (¡contiene secretos!)
+.env
+
+/generated/prisma
